@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lab3_Var1;
+using Lab4_Var1;
 
 namespace UnitTestProject
 {

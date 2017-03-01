@@ -41,8 +41,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Credit.cs" />
+    <Compile Include="Education.cs" />
+    <Compile Include="Exam.cs" />
+    <Compile Include="GenerateElementDelegate.cs" />
+    <Compile Include="GenericKeySelector.cs" />
+    <Compile Include="GenericStudentCollection.cs" />
+    <Compile Include="GenericTestCollections.cs" />
+    <Compile Include="IDateAndCopy.cs" />
+    <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Student.cs" />
+    <Compile Include="StudentCollection.cs" />
+    <Compile Include="TestCollections.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

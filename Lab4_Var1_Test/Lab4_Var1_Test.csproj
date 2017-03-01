@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>cf975939-8992-4e39-b379-ae9d08181a1b</ProjectGuid>
+    <ProjectGuid>{2BF8135A-BE9B-4B9E-A2B7-4D8236DFF32C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lab4_Var1_Test</RootNamespace>
@@ -50,8 +50,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Persontest.cs" />
+    <Compile Include="StudentCollectionTest.cs" />
+    <Compile Include="StudentTest.cs" />
+    <Compile Include="TestCollections_Test.cs" />
+    <Compile Include="TestGenericStudentCollection.cs" />
+    <Compile Include="Test_GenericTestCollections.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lab4_Var1\Lab4_Var1.csproj">
+      <Project>{8538f491-6244-4206-a42b-8d715938ccb9}</Project>
+      <Name>Lab4_Var1</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

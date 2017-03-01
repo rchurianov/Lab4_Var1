@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Lab3_Var1;
+using Lab4_Var1;
 
 namespace UnitTestProject
 {
