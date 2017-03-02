@@ -10,6 +10,51 @@ namespace Lab4_Var1
     {
         private List<Student> students;
 
+        public string CollectionName { get; set; }
+
+        /* Removes an element from collection.
+         * Returns "false" if there is no element with 
+         * specified index.
+         */
+        public bool Remove(int j) 
+        {
+            try
+            {
+                students.RemoveAt(j);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /* Indexator which gets and sets an element
+         * at a specified index.
+         */
+        public Student this[int index]
+        {
+            get
+            {
+                try
+                {
+                    return students.ElementAt(index);
+                }
+                catch (ArgumentOutOfRangeException ex)
+                {
+                    return null;
+                }
+            }
+
+            set
+            {
+                if (index >= 0 & index < students.Count)
+                {
+                    students[index] = value;
+                }
+            }
+        }
+
         /* Get maximum AGP from `students` collection.
          * It was required by the task to use IEnumerable<T>.Max method
          */
