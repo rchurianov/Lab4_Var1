@@ -188,5 +188,39 @@ namespace UnitTestProject
                 Console.WriteLine(item.ToShortString());
             }
         }
+
+        [TestMethod]
+        public void Test_CollectionName()
+        {
+            StudentCollection sc = new StudentCollection();
+            sc.AddDefaults();
+            sc.CollectionName = "Some Collection";
+            Assert.AreEqual("Some Collection", sc.CollectionName);
+        }
+
+        [TestMethod]
+        public void TestRemove()
+        {
+            StudentCollection sc = new StudentCollection();
+            // Add 5 default student objects
+            sc.AddDefaults();
+            Assert.AreEqual(true, sc.Remove(3));
+            Console.WriteLine(sc.ToString());
+            Assert.AreEqual(false, sc.Remove(4));
+        }
+
+        [TestMethod]
+        public void TestIndexator()
+        {
+            StudentCollection sc = new StudentCollection();
+            sc.AddDefaults();
+            sc[3] = new Student(new Person("Pee-Wee", "Jurker", new DateTime(1985, 12, 3)), Education.Bachelor, 123);
+            Console.WriteLine(sc.ToString());
+            sc[6] = new Student();
+            Student stud = sc[0];
+            Assert.AreEqual(new Student(), stud);
+            stud = sc[7];
+            Assert.AreEqual(null, stud);
+        }
     }
 }
