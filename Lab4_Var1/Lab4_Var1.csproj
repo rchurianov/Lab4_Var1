@@ -49,6 +49,8 @@
     <Compile Include="GenericStudentCollection.cs" />
     <Compile Include="GenericTestCollections.cs" />
     <Compile Include="IDateAndCopy.cs" />
+    <Compile Include="Journal.cs" />
+    <Compile Include="JournalEntry.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
