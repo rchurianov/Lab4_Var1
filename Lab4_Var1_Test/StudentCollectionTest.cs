@@ -222,5 +222,15 @@ namespace UnitTestProject
             stud = sc[7];
             Assert.AreEqual(null, stud);
         }
+
+        [TestMethod]
+        public void TestStudentCountChanged()
+        {
+            StudentCollection sc = new StudentCollection();
+            Journal journal = new Journal();
+            sc.StudentsCountChanged += journal.handle_StudentsCountChanged;
+            sc.AddDefaults();
+            Console.WriteLine(journal.ToString());
+        }
     }
 }
