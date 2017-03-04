@@ -56,7 +56,6 @@
     <Compile Include="TestCollections_Test.cs" />
     <Compile Include="TestGenericStudentCollection.cs" />
     <Compile Include="Test_GenericTestCollections.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
