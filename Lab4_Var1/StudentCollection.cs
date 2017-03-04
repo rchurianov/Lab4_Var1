@@ -18,7 +18,7 @@ namespace Lab4_Var1
 
         public string CollectionName { get; set; }
 
-        #region Events and handlers for notifying when List<Student> changes
+        #region Events for notifying when List<Student> changes
 
         /* Event raises when number of elements in this.studetns changes */
         public event StudentListHandler StudentsCountChanged;
