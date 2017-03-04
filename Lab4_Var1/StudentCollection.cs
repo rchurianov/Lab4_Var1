@@ -97,6 +97,12 @@ namespace Lab4_Var1
                 if (index >= 0 & index < students.Count)
                 {
                     students[index] = value;
+
+                    StudentListEventHandlerEventArgs args = new StudentListEventHandlerEventArgs();
+                    args.ChangedObject = students[index];
+                    args.ChangeType = "An element was changed.";
+                    args.CollectionName = this.CollectionName;
+                    OnStudentReferenceChanged(args);
                 }
             }
         }
