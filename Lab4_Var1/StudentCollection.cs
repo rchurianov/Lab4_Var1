@@ -10,7 +10,45 @@ namespace Lab4_Var1
     {
         private List<Student> students;
 
+        public StudentCollection()
+        {
+            this.students = new List<Student>();
+            this.CollectionName = "";
+        }
+
         public string CollectionName { get; set; }
+
+        #region Events and handlers for notifying when List<Student> changes
+
+        /* Event raises when number of elements in this.studetns changes */
+        public event StudentListHandler StudentsCountChanged;
+
+        /* Event raises when reference to one of the "students"
+         * collection changes. */
+        public event StudentListHandler StudentReferenceChanged;
+
+        /* Abstraction method to separate event handler call */
+        protected virtual void OnStudentsCountChanged(StudentListEventHandlerEventArgs args)
+        {
+            StudentListHandler handler = StudentsCountChanged;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
+
+        /* Abstraction method to separate event handler call */
+        protected virtual void OnStudentReferenceChanged(StudentListEventHandlerEventArgs args)
+        {
+            StudentListHandler handler = StudentReferenceChanged;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
+
+        #endregion
+
 
         /* Removes an element from collection.
          * Returns "false" if there is no element with 
@@ -18,14 +56,22 @@ namespace Lab4_Var1
          */
         public bool Remove(int j) 
         {
+            Student stud = new Student();
             try
             {
+                stud = students.ElementAt<Student>(j);
                 students.RemoveAt(j);
             }
             catch (ArgumentOutOfRangeException ex)
             {
                 return false;
             }
+            
+            StudentListEventHandlerEventArgs args = new StudentListEventHandlerEventArgs();
+            args.ChangedObject = stud;
+            args.ChangeType = "A Student at index " + j + " was  removed from collection.";
+            args.CollectionName = this.CollectionName;
+            OnStudentsCountChanged(args);
             return true;
         }
 
@@ -124,7 +170,14 @@ namespace Lab4_Var1
                 students = new List<Student>();
             for (int i = 0; i < 5; i++)
             {
-                students.Add(new Student());
+                Student stud = new Student();
+                students.Add(stud);
+
+                StudentListEventHandlerEventArgs args = new StudentListEventHandlerEventArgs();
+                args.ChangedObject = stud;
+                args.ChangeType = "A new default Student object was added to collection.";
+                args.CollectionName = this.CollectionName;
+                OnStudentsCountChanged(args);
             }
         }
 
@@ -138,6 +191,12 @@ namespace Lab4_Var1
                 for (int i = 0; i < student_array.Length; i++)
                 {
                     this.students.Add(student_array[i]);
+
+                    StudentListEventHandlerEventArgs args = new StudentListEventHandlerEventArgs();
+                    args.ChangedObject = student_array[i];
+                    args.ChangeType = "A new Student object from a source was added to collection.";
+                    args.CollectionName = this.CollectionName;
+                    OnStudentsCountChanged(args);
                 }
             }
         }
