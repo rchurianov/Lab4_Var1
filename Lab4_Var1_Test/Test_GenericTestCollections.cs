@@ -28,7 +28,7 @@ namespace UnitTestProject
         [TestMethod]
         public void Test_TimeComparison()
         {
-            GenericTestCollections<Person, Student> gtc_ps = new GenericTestCollections<Person, Student>(1000000, person_student_pair_generator);
+            GenericTestCollections<Person, Student> gtc_ps = new GenericTestCollections<Person, Student>(10, person_student_pair_generator);
             int[] results = gtc_ps.TimeComparison();
 
             Console.WriteLine("{0} - search time for the first element in List<Person>", results[0]);

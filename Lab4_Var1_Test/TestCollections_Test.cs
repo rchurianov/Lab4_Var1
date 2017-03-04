@@ -12,7 +12,7 @@ namespace UnitTestProject
         [TestMethod]
         public void Console_Test()
         {
-            TestCollections tc = new TestCollections(1000000);
+            TestCollections tc = new TestCollections(10);
             int[] results = tc.TimeComparison();
         /* [0] - search time for the first element in List<Person>
          * [1] - search time for the central element in List<Person>
