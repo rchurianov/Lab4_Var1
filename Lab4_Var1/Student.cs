@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Lab4_Var1
 {
-    public class Student : Person, IDateAndCopy, IEnumerable
+    public class Student : Person, IDateAndCopy, IEnumerable, INotifyPropertyChanged
     {
         private Education degree;
         private int group_number;
@@ -46,6 +47,22 @@ namespace Lab4_Var1
             //Console.WriteLine("Created new Student with default constructor.");
         }
 
+        #region PropertyChanged events
+        /* PropertyChanged event that occurs when one of Student properties change. 
+         * Required by INotifyPropertyChanged interface.
+         */
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
+        #endregion
+
         /*
          * This indexator return "true" if Student.degree == education_index,
          * and "false" otherwise.
@@ -75,12 +92,23 @@ namespace Lab4_Var1
             }
         }
 
+        /* Gets and sets Student.degree field.
+         * Raises PropertyChanged event.
+         */
         public Education Degree
         {
             get { return degree; }
-            set { degree = value; }
+            set
+            {
+                degree = value;
+                PropertyChangedEventArgs args = new PropertyChangedEventArgs("Degree");
+                OnPropertyChanged(args);
+            }
         }
 
+        /* Gets and sets Student.group_number field.
+         * Raises PropertyChanged event.
+         */
         public int Group_Number
         {
             get { return group_number; }
@@ -90,7 +118,12 @@ namespace Lab4_Var1
                 {
                     throw new ArgumentOutOfRangeException("Assigned value", value, "Value should be in the interval [100, 599].");
                 }
-                else { group_number = value; }
+                else
+                {
+                    group_number = value;
+                    PropertyChangedEventArgs args = new PropertyChangedEventArgs("Group_Number");
+                    OnPropertyChanged(args);
+                }
             }
         }
 
@@ -583,5 +616,7 @@ namespace Lab4_Var1
             Exam.ExamDateComparer edc = new Exam.ExamDateComparer();
             this.exam_list.Sort(edc);
         }
+
+        
     }
 }

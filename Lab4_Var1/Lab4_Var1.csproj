@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionEnum.cs" />
     <Compile Include="Credit.cs" />
     <Compile Include="Education.cs" />
     <Compile Include="Exam.cs" />
