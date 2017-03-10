@@ -39,7 +39,8 @@ namespace Lab4_Var1
         /* Method to subscribe to Student.PropertyChanged event. */
         private void OnStudentPropertyChanged(object sender, PropertyChangedEventArgs args)
         {
-            StudentsChangedEventArgs<TKey> internal_args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Property, args.PropertyName, (TKey)sender);
+            TKey key = key_selector_method((Student)sender);
+            StudentsChangedEventArgs<TKey> internal_args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Property, args.PropertyName, key);
             //internal_args.CollectionName = this.CollectionName;
             //internal_args.ChangeType = Action.Property;
             //internal_args.ChangedElementKey = (TKey)sender;
