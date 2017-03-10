@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,17 @@ namespace Lab4_Var1
             {
                 handler(this, args);
             }
+        }
+
+        /* Method to subscribe to Student.PropertyChanged event. */
+        private void OnStudentPropertyChanged(object sender, PropertyChangedEventArgs args)
+        {
+            StudentsChangedEventArgs<TKey> internal_args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Property, args.PropertyName, (TKey)sender);
+            //internal_args.CollectionName = this.CollectionName;
+            //internal_args.ChangeType = Action.Property;
+            //internal_args.ChangedElementKey = (TKey)sender;
+            //internal_args.StudentProperty = args.PropertyName;
+            OnStudentsChanged(internal_args);
         }
 
         /* Get maximum AGP from `students` collection.
@@ -136,13 +148,14 @@ namespace Lab4_Var1
             {
                 Student stud = new Student(new Person("Polyekt " + i, "Polyektovich " + i, new DateTime()), Education.Bachelor, 123+i);
                 TKey key = key_selector_method(stud);
+                stud.PropertyChanged += OnStudentPropertyChanged;
                 students.Add(key, stud);
 
-                StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>();
-                args.CollectionName = this.CollectionName;
-                args.ChangeType = Action.Add;
-                args.ChangedElementKey = key;
-                args.StudentProperty = "";
+                StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Add, "", key);
+                //args.CollectionName = this.CollectionName;
+                //args.ChangeType = Action.Add;
+                //args.ChangedElementKey = key;
+                //args.StudentProperty = "";
                 OnStudentsChanged(args);
             }
         }
@@ -157,9 +170,10 @@ namespace Lab4_Var1
                 for (int i = 0; i < student_array.Length; i++)
                 {
                     TKey key = key_selector_method(student_array[i]);
+                    student_array[i].PropertyChanged += OnStudentPropertyChanged;
                     this.students.Add(key, student_array[i]);
 
-                    StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>();
+                    StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Add, "", key);
                     args.CollectionName = this.CollectionName;
                     args.ChangeType = Action.Add;
                     args.ChangedElementKey = key;
@@ -170,22 +184,25 @@ namespace Lab4_Var1
         }
 
         /* Removes specified Student element from students collection.
-         * Returns true if operation succeccfull, returns false if no element found,
+         * Returns true if operation successfull, returns false if no element found,
          * or collection is null.
          */
         public bool Remove(Student st)
         {
-            if (students != null)
+            if (students != null && st != null)
             {
                 TKey key = key_selector_method(st);
+                Student value;
+                students.TryGetValue(key, out value);
                 if (students.Remove(key))
                 {
-                    StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>();
+                    StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Remove, "", key);
                     args.CollectionName = this.CollectionName;
                     args.ChangeType = Action.Remove;
                     args.ChangedElementKey = key;
                     args.StudentProperty = "";
                     OnStudentsChanged(args);
+                    return true;
                 }
                 else
                     return false;
