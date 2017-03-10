@@ -56,9 +56,11 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="StudentsChangedEventArgs.cs" />
     <Compile Include="StudentCollection.cs" />
     <Compile Include="StudentListEventHandlerEventArgs.cs" />
     <Compile Include="StudentListHandler.cs" />
+    <Compile Include="StudentsChangedHandler.cs" />
     <Compile Include="TestCollections.cs" />
   </ItemGroup>
   <ItemGroup>

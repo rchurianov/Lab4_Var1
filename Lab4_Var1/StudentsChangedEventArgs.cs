@@ -16,7 +16,7 @@ namespace Lab4_Var1
 
         public TKey ChangedElementKey { get; set; }
 
-        public StudentChangedEventArgs(string collection_name, Action change_type, string student_property, TKey key)
+        public StudentsChangedEventArgs(string collection_name, Action change_type, string student_property, TKey key)
         {
             this.CollectionName = collection_name;
             this.ChangeType = change_type;
