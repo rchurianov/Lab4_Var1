@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Lab4_Var1
 {
-    enum Action { Add, Remove, Property };
+    public enum Action { Add, Remove, Property };
 }
