@@ -174,10 +174,10 @@ namespace Lab4_Var1
                     this.students.Add(key, student_array[i]);
 
                     StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Add, "", key);
-                    args.CollectionName = this.CollectionName;
-                    args.ChangeType = Action.Add;
-                    args.ChangedElementKey = key;
-                    args.StudentProperty = "";
+                    //args.CollectionName = this.CollectionName;
+                    //args.ChangeType = Action.Add;
+                    //args.ChangedElementKey = key;
+                    //args.StudentProperty = "";
                     OnStudentsChanged(args);
                 }
             }
@@ -192,20 +192,27 @@ namespace Lab4_Var1
             if (students != null && st != null)
             {
                 TKey key = key_selector_method(st);
-                Student value;
-                students.TryGetValue(key, out value);
+                Student stud;
+                if (students.TryGetValue(key, out stud))
+                {
+                    stud.PropertyChanged -= OnStudentPropertyChanged;
+                }
                 if (students.Remove(key))
                 {
                     StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>(this.CollectionName, Action.Remove, "", key);
-                    args.CollectionName = this.CollectionName;
-                    args.ChangeType = Action.Remove;
-                    args.ChangedElementKey = key;
-                    args.StudentProperty = "";
+                    //args.CollectionName = this.CollectionName;
+                    //args.ChangeType = Action.Remove;
+                    //args.ChangedElementKey = key;
+                    //args.StudentProperty = "";
                     OnStudentsChanged(args);
                     return true;
                 }
                 else
+                {
+                    stud.PropertyChanged += OnStudentPropertyChanged;
                     return false;
+                }
+                    
             }
             else
                 return false;
