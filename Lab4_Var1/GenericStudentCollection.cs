@@ -17,7 +17,23 @@ namespace Lab4_Var1
             this.key_selector_method = input_key_selector;
         }
 
-        // TODO: everything should be changed below according to Extra Task requirements.
+        public string CollectionName { get; set; }
+
+        /* Event StudentsChanged occurs when elements are added to collection,
+         * when elements are removed from collection,
+         * when data of an element changes.
+         */
+        public event StudentsChangedHandler<TKey> StudentsChanged;
+
+        /* Abstraction method for invoking a handler on StudentsChanged event. */
+        protected virtual void OnStudentsChanged(StudentsChangedEventArgs<TKey> args)
+        {
+            StudentsChangedHandler<TKey> handler = StudentsChanged;
+            if (handler != null)
+            {
+                handler(this, args);
+            }
+        }
 
         /* Get maximum AGP from `students` collection.
          * It was required by the task to use IEnumerable<T>.Max method
@@ -112,7 +128,7 @@ namespace Lab4_Var1
         }*/
 
         /* Adds 5 default Student objects to students collection */
-        public void AddDefaults() // test!
+        public void AddDefaults()
         {
             if (this.students == null)
                 this.students = new Dictionary<TKey, Student>();
@@ -121,10 +137,17 @@ namespace Lab4_Var1
                 Student stud = new Student(new Person("Polyekt " + i, "Polyektovich " + i, new DateTime()), Education.Bachelor, 123+i);
                 TKey key = key_selector_method(stud);
                 students.Add(key, stud);
+
+                StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>();
+                args.CollectionName = this.CollectionName;
+                args.ChangeType = Action.Add;
+                args.ChangedElementKey = key;
+                args.StudentProperty = "";
+                OnStudentsChanged(args);
             }
         }
 
-        public void AddStudents(params Student[] student_array) // test!
+        public void AddStudents(params Student[] student_array)
         {
             if (student_array != null)
             {
@@ -135,8 +158,40 @@ namespace Lab4_Var1
                 {
                     TKey key = key_selector_method(student_array[i]);
                     this.students.Add(key, student_array[i]);
+
+                    StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>();
+                    args.CollectionName = this.CollectionName;
+                    args.ChangeType = Action.Add;
+                    args.ChangedElementKey = key;
+                    args.StudentProperty = "";
+                    OnStudentsChanged(args);
                 }
             }
+        }
+
+        /* Removes specified Student element from students collection.
+         * Returns true if operation succeccfull, returns false if no element found,
+         * or collection is null.
+         */
+        public bool Remove(Student st)
+        {
+            if (students != null)
+            {
+                TKey key = key_selector_method(st);
+                if (students.Remove(key))
+                {
+                    StudentsChangedEventArgs<TKey> args = new StudentsChangedEventArgs<TKey>();
+                    args.CollectionName = this.CollectionName;
+                    args.ChangeType = Action.Remove;
+                    args.ChangedElementKey = key;
+                    args.StudentProperty = "";
+                    OnStudentsChanged(args);
+                }
+                else
+                    return false;
+            }
+            else
+                return false;
         }
 
         public override string ToString()
